@@ -8,13 +8,15 @@ struct let {
 		int n;
 		char s;
 	};
+bool mod_lesser(let elem1, let elem2) {
+	return elem1.n < elem2.n;
+}
 int main()
 {
 	setlocale(LC_ALL, "Russian");
 	queue <let> q1;
-	vector <let> v1;
-	vector <let> v;
-	vector <let>::iterator Iter; int i;
+	vector <let> v1, v2 (10), v;
+	int i;
 	for (i = 0; i <= 9; i++)   //заполнение очереди
 	{
 		let element; element.n = 2 * i + 1; element.s = (char)(-i);
@@ -78,4 +80,28 @@ int main()
 		cout << n.n << "." << n.s << " ";
 	});
 	cout << ")" << endl;
+	while (!q1.empty())  //снова работа с очередью
+	{
+		v.push_back(q1.front());
+		q1.pop();
+	}
+	merge(v.begin(), v.end(), v1.begin(), v1.end(), v2.begin(), [](const let& a, const let& b)
+	{
+		return a.n < b.n; });
+	cout << "Sorted vector v2 = ( ";
+	for_each(v2.begin(), v2.end(), [](const let& n) {
+		cout << n.n << "." << n.s << " ";
+	});
+	cout << ")" << endl;
+	vector<let>::iterator::difference_type result;
+	result = count_if(v2.begin(), v2.end(), [](const let& n) {
+		return ((int)n.s < -5);
+	});
+	cout << "Количество символов, код которых меньше -5, равно " << result << endl;
+	bool cash = any_of(v2.begin(), v2.end(), [](const let& n) {
+		return ((int)n.s < -8);
+	});
+	if (cash) cout << "В векторе находится символ с кодом меньше, чем -8" << endl;
+	else cout << "В векторе нет символа с кодом меньше -8" << endl;
+	system("pause");
 }
