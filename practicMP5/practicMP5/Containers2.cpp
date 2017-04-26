@@ -5,19 +5,19 @@
 #include <Windows.h>
 using namespace std;
 struct let {
-		int n;
-		char s;
-	};
-bool mod_lesser(let elem1, let elem2) {
-	return elem1.n < elem2.n;
-}
+	int n;
+	char s;
+};
+
 int main()
 {
 	setlocale(LC_ALL, "Russian");
 	queue <let> q1;
-	vector <let> v1, v2 (10), v;
-	int i;
-	for (i = 0; i <= 9; i++)   //заполнение очереди
+	vector <let> v1, v;
+	int i, k;
+	cout << "Введите количество элементов, которые войдут в очередь "; cin >> k;
+	vector <let> v2(k);
+	for (i = 0; i <= k - 1; i++)   //заполнение очереди
 	{
 		let element; element.n = 2 * i + 1; element.s = (char)(-i);
 		q1.push(element);
@@ -31,7 +31,7 @@ int main()
 	sort(v.begin(), v.end(), [](const let& a, const let& b)
 	{
 		return a.n > b.n; });
-	cout << "Sorted queue = ( ";
+	cout << "Очередь, отсортированная по убыванию = ( ";
 	for_each(v.begin(), v.end(), [](const let& n) {
 		cout << n.n << "." << n.s << " ";
 	});
@@ -49,12 +49,12 @@ int main()
 	sort(v1.begin(), v1.end(), [](const let& a, const let& b)
 	{
 		return a.n > b.n; });
-	cout << "Sorted vector v1 = ( ";
+	cout << "Вектор v1, отсортированный по убыванию = ( ";
 	for_each(v1.begin(), v1.end(), [](const let& n) {
 		cout << n.n << "." << n.s << " ";
 	});
 	cout << ")" << endl;
-	while (!q1.empty())  //снова работа с очередью
+	while (!q1.empty())  //снова работа с очередью: сортировка по возрастанию
 	{
 		v.push_back(q1.front());
 		q1.pop();
@@ -62,7 +62,7 @@ int main()
 	sort(v.begin(), v.end(), [](const let& a, const let& b)
 	{
 		return a.n < b.n; });
-	cout << "Sorted queue = ( ";
+	cout << "Очередь, отсортированная по возрастанию = ( ";
 	for_each(v.begin(), v.end(), [](const let& n) {
 		cout << n.n << "." << n.s << " ";
 	});
@@ -75,7 +75,7 @@ int main()
 	sort(v1.begin(), v1.end(), [](const let& a, const let& b) //сортировка вектора
 	{
 		return a.n < b.n; });
-	cout << "Sorted vector v1 = ( ";
+	cout << "Вектор v1, отсортированный по возрастанию = ( ";
 	for_each(v1.begin(), v1.end(), [](const let& n) {
 		cout << n.n << "." << n.s << " ";
 	});
@@ -88,7 +88,7 @@ int main()
 	merge(v.begin(), v.end(), v1.begin(), v1.end(), v2.begin(), [](const let& a, const let& b)
 	{
 		return a.n < b.n; });
-	cout << "Sorted vector v2 = ( ";
+	cout << "Новый вектор, полученный после слияния = ( ";
 	for_each(v2.begin(), v2.end(), [](const let& n) {
 		cout << n.n << "." << n.s << " ";
 	});
